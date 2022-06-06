@@ -1,0 +1,40 @@
+
+.split {
+  height: 100%;
+  width: 55%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  /* padding-top: 70px; */
+}
+
+
+.left {
+  left: 20;
+  top: 60px;
+}
+
+.right {
+  right: -190;
+  top: 60px;
+}
+
+div.heading
+{
+    font-size: 30px;
+}
+
+/* body {background-color: rgb(214, 214, 214)} */
+
+textarea
+{
+  resize: none;
+  
+}
+
+
+.CodeMirror {
+  border: 1px solid rgb(16, 15, 15);
+  height: 500px;
+}
