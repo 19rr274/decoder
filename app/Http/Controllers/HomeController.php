@@ -166,18 +166,18 @@ class HomeController extends Controller
 
 
 
-        public function find($id,Request $request)
-    {       
+    //     public function find($id,Request $request)
+    // {       
 
-        $index=-1;
-        for ($i = 0; $i < $request->line ; $i++) 
-        {
-            $index = strpos($request->code, "\n", 1 + $index );
-        }
-        $index
-        $code=substr($request->code,0,$index+1);
-        $code.=
-        $code.=substr($request->code,$index,);
+    //     $index=-1;
+    //     for ($i = 0; $i < $request->line ; $i++) 
+    //     {
+    //         $index = strpos($request->code, "\n", 1 + $index );
+    //     }
+    //     $index
+    //     $code=substr($request->code,0,$index+1);
+    //     $code.=
+    //     $code.=substr($request->code,$index,);
 
 
 

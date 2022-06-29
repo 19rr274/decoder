@@ -20,7 +20,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/create', [App\Http\Controllers\HomeController::class, 'create']);
 Route::get('/{id}/edit', [App\Http\Controllers\HomeController::class, 'edit']);
 Route::get('/{id}/delete', [App\Http\Controllers\HomeController::class, 'delete']);
 Route::post('/upload', [App\Http\Controllers\HomeController::class, 'upload']);

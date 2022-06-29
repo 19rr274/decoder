@@ -1,23 +1,43 @@
-
+/* 
 .split {
-  height: 100%;
+  height: 80%;
   width: 55%;
   position: fixed;
   z-index: 1;
   top: 0;
   overflow-x: hidden;
-  /* padding-top: 70px; */
+}
+.splitio {
+  height: 80%;
+  width: 45%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+}
+
+.splitedit {
+  height: 80%;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+  top: 90%;
+  overflow-x: hidden;
 }
 
 
 .left {
-  left: 20;
-  top: 60px;
+  left: 0;
+  top: 55px;
+  border: 1px solid #ffffff;
+  
 }
 
 .right {
-  right: -190;
-  top: 60px;
+  left: 55%;
+  top: 55px;
+  border: 1px solid #ffffff;
+  
 }
 
 div.heading
@@ -25,7 +45,6 @@ div.heading
     font-size: 30px;
 }
 
-/* body {background-color: rgb(214, 214, 214)} */
 
 textarea
 {
@@ -35,6 +54,108 @@ textarea
 
 
 .CodeMirror {
-  border: 1px solid rgb(16, 15, 15);
-  height: 500px;
+  border: 1px solid #ffffff;
+  height: 94%;
+  border-bottom: 0px;
+}
+
+
+
+.code{
+  border: 1px solid #ffffff;
+    border-bottom: 0px;
+}
+.io{
+  border: 1px solid #ffffff;
+  border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0px;
+}
+.ioo{
+  border: 1px solid #ffffff;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 0px;
+}
+body{
+  background-color: #222222;
+  color: azure;
+} */
+
+
+.textOnInput {
+  position: relative;
+}
+.textOnInput label {
+  position: absolute;
+  top: -15px;
+  left: 23px;
+  padding: 2px;
+  z-index: 1;
+}
+.textOnInput label:after {
+  content: " ";
+  background-color: #fff;
+  width: 100%;
+  height: 13px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}
+label {
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: .5rem;
+}
+.form-control {
+  box-shadow: none !important;
+
+}
+
+
+
+
+body{
+  background-color: #222222;
+  color: azure;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.CodeMirror { 
+  min-height: 550px;
+  height: auto;
+  background-color: #222222;
+
+}
+.debugbar
+{
+  background-color: rgb(255, 255, 255);
+  position:fixed;
+  top:20%;
+  left:70vw;
+  color:black;
+  padding: 2%;
+  z-index: -1;
+  border-radius: 10px;
+}
+
+
+.input
+{
+  background-color: rgb(255, 255, 255);
+  position:fixed;
+  top:20%;
+  left:20vw;
+  color:black;
+  padding: 2%;
+  z-index: -1;
+  border-radius: 10px;
+  width:40vw;
+}
+
+
+.ioo{
+  background-color: #272525;
 }
