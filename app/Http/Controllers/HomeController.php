@@ -31,12 +31,7 @@ class HomeController extends Controller
         return view('home')->with(['todos'=> $todos,'user_id'=> $user_id]);
     } 
 
-    public function create()
-    {
-        $todos = Todo::all(); 
-        $user_id = auth()->user()->id;
-        return view('createnewfile')->with(['todos'=> $todos,'user_id'=> $user_id]);;
-    } 
+    
     public function edit($id)
     {
         $row = Todo::find($id);
@@ -69,22 +64,25 @@ class HomeController extends Controller
         'response'=>  $request->response, 'value'=>$request->value,'line'=>$request->line, 'val'=>$request->val ]);
     } 
 
+
+
+        
     public function run($id,Request $request)
     {
         $code = $request->code;
         DB::table('Todos')->where("id", '=', $id)->update(['code'=> $code ]);
         $row = Todo::find($id);
-        $pid = Http::post('https://c05f3bda.compilers.sphere-engine.com/api/v4/submissions?access_token=cb433e9f8c0a6c627e95aaf45a08693a', 
+        $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
         [
-            'access_token' => 'cb433e9f8c0a6c627e95aaf45a08693a',
+            'access_token' => '8617797e8aa5b87b86878c267c0f1fae',
             'source' => $row->code,
             'compilerId' => '1',
             'input' =>  $request->input
             
         ]);     
-            $a = "https://c05f3bda.compilers.sphere-engine.com/api/v4/submissions/";
+            $a = "https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions/";
             $a.= $pid["id"]; 
-            $a.= "/output?access_token=cb433e9f8c0a6c627e95aaf45a08693a"; 
+            $a.= "/output?access_token=8617797e8aa5b87b86878c267c0f1fae"; 
             $b= $pid["id"]; 
             sleep(2);
             $response = Http::get( $a);
@@ -93,6 +91,15 @@ class HomeController extends Controller
     } 
 
 
+
+
+
+
+
+
+
+
+    
     public function find($id,Request $request)
     {
         
@@ -106,17 +113,17 @@ class HomeController extends Controller
         $input.= "\n";
         $input.= "This is the end";
 
-        $pid = Http::post('https://c05f3bda.compilers.sphere-engine.com/api/v4/submissions?access_token=cb433e9f8c0a6c627e95aaf45a08693a', 
+        $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
         [
-            'access_token' => 'cb433e9f8c0a6c627e95aaf45a08693a',
+            'access_token' => '8617797e8aa5b87b86878c267c0f1fae',
             'source' => $pro,
             'compilerId' => '116',
             'input' =>  $input
             
         ]);     
-            $a = "https://c05f3bda.compilers.sphere-engine.com/api/v4/submissions/";
+            $a = "https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions/";
             $a.= $pid["id"]; 
-            $a.= "/output?access_token=cb433e9f8c0a6c627e95aaf45a08693a"; 
+            $a.= "/output?access_token=8617797e8aa5b87b86878c267c0f1fae"; 
            
         
             sleep(2);
@@ -132,17 +139,17 @@ class HomeController extends Controller
             DB::table('Todos')->where("id", '=', $q)->update(['code'=> $source ]);
             $row = Todo::find($q);
             $w=$row->code;
-            $pid = Http::post('https://c05f3bda.compilers.sphere-engine.com/api/v4/submissions?access_token=cb433e9f8c0a6c627e95aaf45a08693a', 
+            $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
             [
-                'access_token' => 'cb433e9f8c0a6c627e95aaf45a08693a',
+                'access_token' => '8617797e8aa5b87b86878c267c0f1fae',
                 'source' => $w,
                 'compilerId' => '1',
                 'input' =>  $request->input
                 
             ]);     
-                $a = "https://c05f3bda.compilers.sphere-engine.com/api/v4/submissions/";
+                $a = "https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions/";
                 $a.= $pid["id"]; 
-                $a.= "/output?access_token=cb433e9f8c0a6c627e95aaf45a08693a"; 
+                $a.= "/output?access_token=8617797e8aa5b87b86878c267c0f1fae"; 
           
                 sleep(2);
                 $response = Http::get( $a);
@@ -154,5 +161,32 @@ class HomeController extends Controller
             'response'=>  $request->output ,'value'=> $varval, 'line'=>$request->line, 'val'=>$request->val ]);  
     
         }
-        // $request->output
-}
+
+
+
+
+
+        public function find($id,Request $request)
+    {       
+
+        $index=-1;
+        for ($i = 0; $i < $request->line ; $i++) 
+        {
+            $index = strpos($request->code, "\n", 1 + $index );
+        }
+        $index
+        $code=substr($request->code,0,$index+1);
+        $code.=
+        $code.=substr($request->code,$index,);
+
+
+
+
+
+
+
+
+    
+    }
+
+
