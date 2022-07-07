@@ -70,7 +70,7 @@ class HomeController extends Controller
     public function run($id,Request $request)
     {
         $code = $request->code;
-        DB::table('Todos')->where("id", '=', $id)->update(['code'=> $code ]);
+        DB::table('todos')->where("id", '=', $id)->update(['code'=> $code ]);
         $row = Todo::find($id);
         $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
         [
