@@ -30,3 +30,6 @@ Route::post('/{id}/run', [App\Http\Controllers\HomeController::class, 'run']);
 
 
 Route::post('/{id}/find', [App\Http\Controllers\HomeController::class, 'find']);
+
+Route::get('/runpro', [App\Http\Controllers\HomeController::class, 'runpro']);
+ 
