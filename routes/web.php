@@ -24,12 +24,12 @@ Route::get('/{id}/edit', [App\Http\Controllers\HomeController::class, 'edit']);
 Route::get('/{id}/delete', [App\Http\Controllers\HomeController::class, 'delete']);
 Route::post('/upload', [App\Http\Controllers\HomeController::class, 'upload']);
 
-Route::post('/{id}/save', [App\Http\Controllers\HomeController::class, 'save']);
+Route::post('/save', [App\Http\Controllers\HomeController::class, 'save']);
 Route::post('/{id}/run', [App\Http\Controllers\HomeController::class, 'run']);
 
 
 
 Route::post('/{id}/find', [App\Http\Controllers\HomeController::class, 'find']);
 
-Route::get('/runpro', [App\Http\Controllers\HomeController::class, 'runpro']);
+Route::post('/runpro', [App\Http\Controllers\HomeController::class, 'runpro']);
  

@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-      
+    <link rel = "icon" href = "{{ asset('img/logoblack.png') }}" type = "image/x-icon">
     <style>
     body {
                 font-family: 'Nunito', sans-serif;

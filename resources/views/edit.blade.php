@@ -23,18 +23,11 @@
     <link href="{{ asset('css/editcm.css') }}" rel="stylesheet">
 
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
           
       <style>
-        #input{
-          display:none;
-          z-index: 2;
-        }
-      #debugbar{
-        display:none;
-        z-index: 2;
-      }
+       
 
       </style>
 
@@ -49,29 +42,31 @@
     <div id="app" style=" background-color: #222222;">
         <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             
-            <div class="container">
-            <a class="navbar-brand" href="/home"  style="color: white;">
-            < HOME
-            </a>
-            <a href="/home"  class="navbar-brand"  >  </a> 
+            <div class="container"  style="color: white;margin-right:0vw;">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <button  type="button" onclick="showinput();" class="btn btn-primary" > RUN </button> &nbsp;
-                <input type="submit" formaction="/{{$id}}/save" class="btn btn-primary" value="SAVE"/> &nbsp;      
-                <button  type="button" onclick="showdebug()" class="btn btn-primary"  > DEBUG </button>
+                
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
                     <!-- Left Side Of Navbar -->   
                     <ul class="navbar-nav me-auto">
-
+                        <a class="navbar-brand gbutton" href="/home"  style="color: white;margin-left:-13vw;">HOME</a>
+                        &nbsp;  &nbsp; 
+                        <button id="saveb" type="button" onclick="savefun();" class="gbutton runb" >SAVE </button>   
                     </ul>
-                    <div class="navbar-brand"  style="text-align:right;color: white;">
-                    <img src="{{ asset('img/logo.png') }}" style="width:3vh;height:3vh;margin-top:-1vh;">eCODER
-                    </div>
+
+
+                        <div class="navbar-brand"  style="color: white;">
+                        <img src="{{ asset('img/logo.png') }}" style="width:3vh;height:3vh;margin-top:-1vh;">eCODER
+                        </div>
+
+
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto" >
                         <!-- Authentication Links -->
+                        <button  type="button" onclick="showinput();" class="gbutton" > RUN </button> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button  type="button" onclick="showdebug()" class="gbutton"  > DEBUG </button>&nbsp;&nbsp;&nbsp;&nbsp;
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -104,13 +99,12 @@
                             </li>
                         @endguest
                     </ul>
-                </div>
+                <!-- </div> -->
+
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        
     </div>
 
   
@@ -123,15 +117,20 @@ CODE
    
 
 OUTPUT
-<textarea class="ioo" id=output name="output" style="width:100%;height:40vh; " >{{$response}}</textarea>
+<textarea class="ioo" id=output name="output" style="width:100%;height:40vh;color:white; " >{{$response}}</textarea>
 
 
 
-<div class="input" id="input" > 
+<div class="inputdiv" id="inputdiv" > 
       <b>INPUT</b>
-      <textarea name="input" id="inputarea" style="width:100%;height:40vh;"  class="form-control" >{{$input}}</textarea>
-      <button  type="button" onclick="runpro();" class="btn btn-primary" style="margin-top:-15vh; margin-left:60vh;" >RUN </button>
-      <button  type="button" onclick="hideinput();" class="btn btn-primary" style="margin-top:-100vh; margin-left:67vh;border-radius:50px;" > X </button>
+      <span style="float:right;margin-top:-1vw;margin-right:-1vw;">
+      <button  type="button" class="gbutton closeb" onclick="hideinput();"> X </button>
+      </span>
+      <br>
+      <textarea name="input" id="inputarea" style="width:100%;height:40vh;resize:none;"  class="form-control" > {{$input}} </textarea>
+      <span style="float:right;margin-top:-3.5vw;margin-right:1vw;">
+      <button  type="button" onclick="runpro();" class="gbutton runb" >RUN </button>
+      </span>
 </div>
 
 
@@ -153,9 +152,9 @@ OUTPUT
               </div>
               <br>
               
-              <input type="submit" value="FIND VALUE"  formaction="/{{$id}}/find" class="btn btn-primary" />
+              <input type="submit" value="FIND VALUE"  formaction="/{{$id}}/find" class="gbutton" />
               
-              <button  type="button" onclick="hidedebug();" class="btn btn-primary" style="float:right;"> HIDE</button>
+              <button  type="button" onclick="hidedebug();" class="gbutton" style="float:right;"> HIDE</button>
               <br><br>
               <div class="textOnInput">
                       
@@ -210,32 +209,59 @@ OUTPUT
     
 <script>
     
-
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
   
 
 
-
 function runpro() {
-    document.getElementById("input").style.display = "none";
+  
+  document.getElementById("inputdiv").style.display = "none";
     document.getElementById("output").innerHTML = "Running...";
+    
+    var data = {
+      'code': editor.getValue(),
+      'input': document.getElementById("inputarea").innerHTML,
+    };
 
-    // var data = {
-    //   code: document.getElementById("code").innerHTML,
-    //   input: document.getElementById("input").innerHTML,
-    // };
+    $.ajax({
+        url: '/runpro',
+        type: 'POST',
+        data: data,
+        success: function(response) {
+          document.getElementById("output").innerHTML = response;
+        }
+    })
 
-    var data=document.getElementById("code").innerHTML;
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("output").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "/runpro", true);
-    xhttp.send();
- 
+
 }
 
+
+function savefun() {
+    document.getElementById("saveb").innerHTML = "Saving...";
+    
+    var data = {
+      'code': editor.getValue(),
+      'id': {{$id}}
+    };
+
+    $.ajax({
+        url: '/save',
+        type: 'POST',
+        data: data,
+
+        
+        success: function(response) {
+       
+          document.getElementById("saveb").innerHTML = "SAVE";
+        }
+    })
+
+
+}
 
 function hidedebug() 
 {
@@ -248,11 +274,11 @@ function showdebug()
 
 function hideinput() 
 {
-  document.getElementById("input").style.display = "none";
+  document.getElementById("inputdiv").style.display = "none";
 }
 function showinput() 
 {
-  document.getElementById("input").style.display = "block";
+  document.getElementById("inputdiv").style.display = "block";
 }
 
 </script>

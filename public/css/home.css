@@ -1,0 +1,60 @@
+a:link,a:visited , a:hover, a:focus, a:active {
+    color: inherit;
+    text-decoration: none;
+
+    }
+body{
+    background-color: #222222;
+color: azure;
+    font-family: 'Montserrat', sans-serif;
+font-family: 'Open Sans', sans-serif;
+    }
+
+.create
+{
+background-color: #282727;
+position:fixed;
+top:20%;
+left:36vw;
+color:white;
+padding: 2%;
+z-index: 1;
+display:none;
+border-radius: 10px;
+/* width:20vw; */
+}
+
+.createbutton
+{
+    
+background-color: #302f2f;
+border-radius: 5px;
+color: azure;
+font-size: medium;
+padding: 5px;
+padding-left: 10px;
+padding-right: 10px;
+border: none;
+}
+
+
+.card-header
+{
+    background-color: #211f1f;
+    border-color:rgb(235, 234, 234);
+}
+
+.cardbody
+{
+    background-color: #211f1f;
+    border-right: 0px;
+    border-left: 0px;
+    border-color:rgb(235, 234, 234);
+    text-align:left;
+}
+
+
+.cardbody:hover
+{
+background-color: #302f2f;
+}
