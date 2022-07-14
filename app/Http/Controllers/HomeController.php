@@ -46,7 +46,7 @@ class HomeController extends Controller
     {
         $todo = $request->title;
         $user_id = auth()->user()->id;
-        DB::insert('insert into Todos (user_id, title) values (?, ?)', [$user_id, $todo]);
+        DB::insert('insert into todos (user_id, title) values (?, ?)', [$user_id, $todo]);
         return redirect()->route('home');
     }
     public function delete($id)
@@ -55,12 +55,14 @@ class HomeController extends Controller
         return redirect()->route('home');
     } 
 
-    public function save($id,Request $request)
+    public function save(Request $request)
     {
         $code = $request->code;
-        DB::table('Todos')->where("id", '=', $id)->update(['code'=> $code ]);
+        $id= $request->id;
+        DB::table('todos')->where("id", '=', $id)->update(['code'=> $code ]);
         $row = Todo::find($id);
-        return view('edit')->with(['id'=>$id, 'code'=> $row->code,'input' =>  $request->input, 
+        return "hai";
+        return view('edit')->with(['id'=>$id, 'code'=> $request->code,'input' =>  $request->input, 
         'response'=>  $request->response, 'value'=>$request->value,'line'=>$request->line, 'val'=>$request->val ]);
     } 
 
@@ -166,25 +168,30 @@ class HomeController extends Controller
 
 
 
-    //     public function find($id,Request $request)
-    // {       
-
-    //     $index=-1;
-    //     for ($i = 0; $i < $request->line ; $i++) 
-    //     {
-    //         $index = strpos($request->code, "\n", 1 + $index );
-    //     }
-    //     $index
-    //     $code=substr($request->code,0,$index+1);
-    //     $code.=
-    //     $code.=substr($request->code,$index,);
-
-
-    public function runpro()
+    public function runpro(Request $request)
     {
         
-        $a="hello";
-        return $a;
+        $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
+        [
+            'access_token' => '8617797e8aa5b87b86878c267c0f1fae',
+            'source' => $request->code,
+            'compilerId' => '1',
+            'input' =>  $request->input
+            
+        ]);     
+            $a = "https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions/";
+            $a.= $pid["id"]; 
+            $a.= "/output?access_token=8617797e8aa5b87b86878c267c0f1fae"; 
+            $b= $pid["id"]; 
+            sleep(2);
+            $response = Http::get( $a);
+            return  $response;
+
+
+
+
+
+
     }
 
         
