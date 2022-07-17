@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>DeCODER</title>
+    <title>DCODER</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -21,28 +21,18 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link href="{{ asset('css/editcm.css') }}" rel="stylesheet">
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-          
-      <style>
-       
-
-      </style>
-
 
     
 </head>
 <body>
 
 
-<form action="/{{$id}}/run" method="post">
+<form  method="post" action="/find" >
 @csrf
     <div id="app" style=" background-color: #222222;">
         <nav class="navbar navbar-expand-md navbar-light shadow-sm">
-            
-            <div class="container"  style="color: white;margin-right:0vw;">
+             <div class="container"  style="color: white;margin-right:0vw;">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -58,7 +48,7 @@
 
 
                         <div class="navbar-brand"  style="color: white;">
-                        <img src="{{ asset('img/logo.png') }}" style="width:3vh;height:3vh;margin-top:-1vh;">eCODER
+                        <img src="{{ asset('img/logo.png') }}" style="width:1.5rem;height:1.5rem;margin-top:-.5rem;">CODER
                         </div>
 
 
@@ -103,16 +93,12 @@
 
             </div>
         </nav>
-
-        
     </div>
 
   
                     
 CODE
-<div >                        
 <textarea style="magrin-left:5%;" id="code" name="code">{{$code}}</textarea>
-</div>
 <br>    
    
 
@@ -143,88 +129,60 @@ OUTPUT
           <br>
           <div class="textOnInput">
               <label >Variable</label>
-              <input type="text" name="val" class="form-control"  style="width:20vw;height:50px;" value="{{$val}}" requied >
+              <input type="text" id="val" name="val" class="form-control"  style="width:20vw;height:50px;"  requied >
               </div><br>
 
           <div class="textOnInput">
             <label >Line</label>  
-              <input type="number" name="line" class="form-control"  style="height:50px;background-color:white;"  value="{{$line}}" requied>
-              </div>
+              <input type="number" id="line" name="line" class="form-control"  style="height:50px;background-color:white;"   requied>
+            </div>
               <br>
-              
-              <input type="submit" value="FIND VALUE"  formaction="/{{$id}}/find" class="gbutton" />
+
+              <input type="submit" value="FIND VALUE" onclick="rundebug();"  class="gbutton" />
               
               <button  type="button" onclick="hidedebug();" class="gbutton" style="float:right;"> HIDE</button>
               <br><br>
               <div class="textOnInput">
                       
-                      @if($val != null and $line != null)
-                          <label >
-                          Value of {{$val}} at Line {{$line}}
+                   
+                          <label id="val_label" >
+                                
                           </label>
-                      @endif
                         
-                      <input type="test" name="value" style="width:20vw;height:50px;"  class="form-control"  value={{$value}} > 
+                      <input type="text" id="valbox" name="value" style="width:20vw;height:50px;color:black;"  class="form-control"  > 
             </div>
 
 </div>
 
-
 </form>
-
     
-
-  
-   
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
-    <script src="{{ asset('js/editcm.js') }}" ></script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+<script src="{{ asset('js/editcm.js') }}" ></script>
 <script>
    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     lineNumbers: true,
     theme: 'monokai'
 });
 </script>
-
 <link href="{{ asset('css/edit.css') }}" rel="stylesheet">
-
-<link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
 </link>
-
-<script type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
 </script>
-<link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
 
-
-
-
-
-
-
-
-    
 <script>
     
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+$.ajaxSetup({   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}    });
   
-
-
-function runpro() {
-  
-  document.getElementById("inputdiv").style.display = "none";
+function runpro() 
+{
+    document.getElementById("inputdiv").style.display = "none";
     document.getElementById("output").innerHTML = "Running...";
     
     var data = {
       'code': editor.getValue(),
-      'input': document.getElementById("inputarea").innerHTML,
+      'input': document.getElementById("inputarea").value,
     };
 
     $.ajax({
@@ -235,12 +193,10 @@ function runpro() {
           document.getElementById("output").innerHTML = response;
         }
     })
-
-
 }
 
-
-function savefun() {
+function savefun() 
+{
     document.getElementById("saveb").innerHTML = "Saving...";
     
     var data = {
@@ -252,34 +208,41 @@ function savefun() {
         url: '/save',
         type: 'POST',
         data: data,
+        success: function(response) {   document.getElementById("saveb").innerHTML = "SAVE";  }
+    })
 
-        
-        success: function(response) {
-       
-          document.getElementById("saveb").innerHTML = "SAVE";
+
+}
+
+function rundebug() 
+{
+    const val_box = document.getElementById("valbox");
+    val_box.setAttribute("value", "Calculating...");
+    var val_label= "Value of " + document.getElementById("val").value + " at line " +document.getElementById("line").value;
+    var data = {
+        'code': editor.getValue(),
+        'input': document.getElementById("inputarea").value,
+        'line': document.getElementById("line").value,
+        'val' :document.getElementById("val").value
+    };
+    console.log(data);
+    $.ajax({
+        url: '/find',
+        type: 'POST',
+        data: data,
+        success: function(response) {   
+            document.getElementById("val_label").innerHTML = val_label; 
+            val_box.setAttribute("value", response);
         }
     })
 
 
 }
 
-function hidedebug() 
-{
-  document.getElementById("debugbar").style.display = "none";
-}
-function showdebug() 
-{
-  document.getElementById("debugbar").style.display = "block";
-}
-
-function hideinput() 
-{
-  document.getElementById("inputdiv").style.display = "none";
-}
-function showinput() 
-{
-  document.getElementById("inputdiv").style.display = "block";
-}
+function hidedebug()    { document.getElementById("debugbar").style.display = "none";   }
+function showdebug()    { document.getElementById("debugbar").style.display = "block";  }
+function hideinput()    { document.getElementById("inputdiv").style.display = "none";   }
+function showinput()    { document.getElementById("inputdiv").style.display = "block";  }
 
 </script>
     

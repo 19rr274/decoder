@@ -68,91 +68,77 @@ class HomeController extends Controller
 
 
 
-        
-    public function run($id,Request $request)
-    {
-        $code = $request->code;
-        DB::table('todos')->where("id", '=', $id)->update(['code'=> $code ]);
-        $row = Todo::find($id);
-        $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
-        [
-            'access_token' => '8617797e8aa5b87b86878c267c0f1fae',
-            'source' => $row->code,
-            'compilerId' => '1',
-            'input' =>  $request->input
-            
-        ]);     
-            $a = "https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions/";
-            $a.= $pid["id"]; 
-            $a.= "/output?access_token=8617797e8aa5b87b86878c267c0f1fae"; 
-            $b= $pid["id"]; 
-            sleep(2);
-            $response = Http::get( $a);
-        return view('edit')->with(['id'=>$id, 'code'=> $row->code, 'input' =>  $request->input ,'response'=> $response ,
-        'value'=> $request->value,'line'=>$request->line, 'val'=>$request->val ]);  
-    } 
-
-
-
-
-
-
-
-
 
 
     
-    public function find($id,Request $request)
+    public function find(Request $request)
     {
-        
-
-        $pro = Todo::find(1)->code;
-        $input= $request->line;
-        $input.= "\n";
-        $input.= $request->val;
-        $input.= "\n";
-        $input.= $request->code;
-        $input.= "\n";
-        $input.= "This is the end";
-
-        $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
-        [
-            'access_token' => '8617797e8aa5b87b86878c267c0f1fae',
-            'source' => $pro,
-            'compilerId' => '116',
-            'input' =>  $input
+            $mystring =  $request->code;
+            $findme   = "\n";
+            $i=0;
+            $pos=0;
             
-        ]);     
-            $a = "https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions/";
-            $a.= $pid["id"]; 
-            $a.= "/output?access_token=8617797e8aa5b87b86878c267c0f1fae"; 
-           
-        
-            sleep(2);
-
-            $response = Http::get( $a);
-
-
-        
-            $source=$response;
-
-
-            $q='3';
-            DB::table('Todos')->where("id", '=', $q)->update(['code'=> $source ]);
-            $row = Todo::find($q);
-            $w=$row->code;
-            $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
+            while ($i < $request->line)
+            {
+                $pos = strpos($mystring, $findme,$pos+1);
+                $i=$i+1;
+            }
+            $result = substr($mystring, 0, $pos);
+            $result.=' while(1){std::cout<<"thevalis"<<';
+            $result.=$request->val;
+            $result.='<<"thevalis";exit(0);}';
+            $result.= substr($mystring, $pos);
+            $response = Http::post('https://f67682c4.compilers.sphere-engine.com/api/v4/submissions?access_token=6ec5a56ef5a4aa96013c13831312a236', 
             [
-                'access_token' => '8617797e8aa5b87b86878c267c0f1fae',
-                'source' => $w,
+                'access_token' => '6ec5a56ef5a4aa96013c13831312a236',
+                'source' => $result,
                 'compilerId' => '1',
                 'input' =>  $request->input
                 
             ]);     
-                $a = "https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions/";
+
+            sleep(1);
+
+            $a = 'https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/';
+            $a.= $response["id"];
+            $a.= "?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+            
+            $response = Http::get( $a);
+        
+            while ($response['result']['status']['code']<4)
+            {
+                sleep(1);
+                $response = Http::get( $a);
+            }
+
+            if($response['result']['status']['code']==15)
+            {
+                $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
+                $a.= $response["id"]; 
+                $a.= "/output?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+                $response = Http::get( $a);
+                $f=strpos($response,"thevalis");
+                $l=strrpos($response,"thevalis");
+                $varval=mb_substr($response, $f+8, $l-$f-8);
+                return $varval;  
+            } 
+            else
+            {
+                if($response['result']['status']['code']==11)
+                {
+                    return  "Error!";   
+                }
+                return "Value not defined!";
+            }
+
+
+
+
+
+
+                $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
                 $a.= $pid["id"]; 
-                $a.= "/output?access_token=8617797e8aa5b87b86878c267c0f1fae"; 
-          
+                $a.= "/output?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
                 sleep(2);
                 $response = Http::get( $a);
            
@@ -171,34 +157,48 @@ class HomeController extends Controller
     public function runpro(Request $request)
     {
         
-        $pid = Http::post('https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions?access_token=8617797e8aa5b87b86878c267c0f1fae', 
+        $response = Http::post('https://f67682c4.compilers.sphere-engine.com/api/v4/submissions?access_token=6ec5a56ef5a4aa96013c13831312a236', 
         [
-            'access_token' => '8617797e8aa5b87b86878c267c0f1fae',
+            'access_token' => '6ec5a56ef5a4aa96013c13831312a236',
             'source' => $request->code,
             'compilerId' => '1',
             'input' =>  $request->input
             
-        ]);     
-            $a = "https://7c4c8575.compilers.sphere-engine.com/api/v4/submissions/";
-            $a.= $pid["id"]; 
-            $a.= "/output?access_token=8617797e8aa5b87b86878c267c0f1fae"; 
-            $b= $pid["id"]; 
-            sleep(2);
+        ]);    
+
+        sleep(1);
+
+        $a = 'https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/';
+        $a.= $response["id"];
+        $a.= "?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+        $response = Http::get( $a);
+    
+        while ($response['result']['status']['code']<4)
+        {
+            sleep(1);
+            $response = Http::get( $a);
+        }
+        if($response['result']['status']['code']==11)
+        {
+            $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
+            $a.= $response["id"]; 
+            $a.= "/cmpinfo?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
             $response = Http::get( $a);
             return  $response;
-
-
-
-
-
+            
+        }
+        elseif($response['result']['status']['code']==12)
+        {
+            return "runtime error";
+        }
+         
+        $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
+        $a.= $response["id"]; 
+        $a.= "/output?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+        $response = Http::get( $a);
+        return  $response;
 
     }
-
-        
-        
-
-
-
 
 
 

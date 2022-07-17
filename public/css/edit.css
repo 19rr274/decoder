@@ -41,7 +41,7 @@ body{
   margin-right: 2%;
 }
 .CodeMirror { 
-  min-height: 550px;
+  min-height: 600px;
   height: auto;
   background-color: #222222;
 
@@ -74,7 +74,10 @@ body{
 
 
 .ioo{
-  background-color: #272525;
+  background-color:rgb(39,40,34);
+  border: 0px;
+  resize: none;
+  /* background-color: #272525; */
 }
 
 

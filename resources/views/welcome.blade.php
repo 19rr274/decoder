@@ -49,7 +49,7 @@
         </div> 
 
         <div class="logo">
-        <img src="{{ asset('img/logo.png') }}" style="width:10vh;height:10vh;">eCODER
+        <img src="{{ asset('img/logo.png') }}" style="width:4rem;height:4rem;">CODER
         </div>
 
     </body>

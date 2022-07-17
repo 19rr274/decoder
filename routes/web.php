@@ -29,7 +29,7 @@ Route::post('/{id}/run', [App\Http\Controllers\HomeController::class, 'run']);
 
 
 
-Route::post('/{id}/find', [App\Http\Controllers\HomeController::class, 'find']);
+Route::post('/find', [App\Http\Controllers\HomeController::class, 'find']);
 
 Route::post('/runpro', [App\Http\Controllers\HomeController::class, 'runpro']);
  

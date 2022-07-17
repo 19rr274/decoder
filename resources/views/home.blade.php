@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>DeCODER</title>
+    <title>DCODER</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -51,8 +51,8 @@
 
                     </ul>
                     
-                    <div class="navbar-brand"  style="text-align:right;color:azure" >
-                    <img src="{{ asset('img/logo.png') }}" style="width:3vh;height:3vh;margin-top:-1vh;">eCODER
+                    <div class="navbar-brand"  style="text-align:right;color:azure;" >
+                    <img src="{{ asset('img/logo.png') }}" style="width:1.5rem;height:1.5rem;margin-top:-.5rem;">CODER
                      </div>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -117,7 +117,7 @@
                             <a  href="{{asset('/' . $todo->id . '/edit')}}" >{{$todo->title}}.cpp</a>
                             <span style="float:right;">
                                 <a href="{{asset('/' . $todo->id . '/delete')}}" >
-                                <img src="{{ asset('img/trash.png') }}" style="width:20px;height:20px;" alt="delete">
+                                <img src="{{ asset('img/can.jpg') }}" style="width:2rem;height:2rem;" alt="delete">
                                 </a>
                             </span>
                         </div>

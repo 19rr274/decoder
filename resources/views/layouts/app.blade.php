@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>DeCODER</title>
+    <title>DCODER</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -36,7 +36,7 @@
                     <ul class="navbar-nav me-auto">
 
                     </ul>
-                    <div class="navbar-brand"  style="text-align:right;" >DeCODER </div>
+                    <div class="navbar-brand"  style="text-align:right;" >DCODER </div>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->

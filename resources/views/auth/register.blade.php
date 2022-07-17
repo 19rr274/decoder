@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>DeCODER</title>
+    <title>DCODER</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -46,7 +46,7 @@
 
                     </ul>
                     <div class="navbar-brand"  style="text-align:right;color:white;" >
-                    <img src="{{ asset('img/logo.png') }}" style="width:3vh;height:3vh;margin-top:-1vh;">eCODER
+                    <img src="{{ asset('img/logo.png') }}" style="width:3vh;height:3vh;margin-top:-1vh;">CODER
                    </div>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
