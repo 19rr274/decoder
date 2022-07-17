@@ -117,7 +117,7 @@
                             <a  href="{{asset('/' . $todo->id . '/edit')}}" >{{$todo->title}}.cpp</a>
                             <span style="float:right;">
                                 <a href="{{asset('/' . $todo->id . '/delete')}}" >
-                                <img src="{{ asset('img/can.jpg') }}" style="width:2rem;height:2rem;" alt="delete">
+                                <img src="{{ asset('img/bin.png') }}" style="width:1.75rem;height:2rem;" alt="delete">
                                 </a>
                             </span>
                         </div>
