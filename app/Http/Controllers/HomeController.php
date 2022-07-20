@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['guest','runpro','find']) ;
     }
 
     /**
@@ -29,9 +29,8 @@ class HomeController extends Controller
         $todos = Todo::all(); 
         $user_id = auth()->user()->id;
         return view('home')->with(['todos'=> $todos,'user_id'=> $user_id]);
-    } 
+    }   
 
-    
     public function edit($id)
     {
         $row = Todo::find($id);
@@ -42,6 +41,7 @@ class HomeController extends Controller
         'value'=> "",'line'=>"", 'val'=>"" ]);
         
     } 
+
     public function upload(Request $request)
     {
         $todo = $request->title;
@@ -49,6 +49,7 @@ class HomeController extends Controller
         DB::insert('insert into todos (user_id, title) values (?, ?)', [$user_id, $todo]);
         return redirect()->route('home');
     }
+
     public function delete($id)
     {
         Todo::find($id)->delete();
@@ -66,11 +67,6 @@ class HomeController extends Controller
         'response'=>  $request->response, 'value'=>$request->value,'line'=>$request->line, 'val'=>$request->val ]);
     } 
 
-
-
-
-
-    
     public function find(Request $request)
     {
             $mystring =  $request->code;
@@ -131,11 +127,6 @@ class HomeController extends Controller
                 return "Value not defined!";
             }
 
-
-
-
-
-
                 $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
                 $a.= $pid["id"]; 
                 $a.= "/output?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
@@ -148,11 +139,7 @@ class HomeController extends Controller
             return view('edit')->with(['id'=>$id, 'code'=> $request->code, 'input' => $request->input,
             'response'=>  $request->output ,'value'=> $varval, 'line'=>$request->line, 'val'=>$request->val ]);  
     
-        }
-
-
-
-
+    }
 
     public function runpro(Request $request)
     {
@@ -200,6 +187,12 @@ class HomeController extends Controller
 
     }
 
+    
+    public function guest()
+    {
+        return view('guest')->with(['id'=>" ", 'code'=> "",'input' => "", 'response'=> "", 
+        'value'=> "",'line'=>"", 'val'=>"" ]);  
+    } 
 
 
     
