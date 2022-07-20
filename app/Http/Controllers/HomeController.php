@@ -35,8 +35,8 @@ class HomeController extends Controller
     {
         $row = Todo::find($id);
         $code = $row->code;
-        $response = " ";
-        $input =" ";
+        $response = "";
+        $input ="";
         return view('edit')->with(['id'=>$id, 'code'=> $code,'input' => $input, 'response'=> $response, 
         'value'=> "",'line'=>"", 'val'=>"" ]);
         
