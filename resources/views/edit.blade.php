@@ -123,7 +123,7 @@ OUTPUT
 
 <div class="debugbar" id="debugbar"> 
           <div style="text-align:center">
-          <b>DEBUGBAR</b>
+          <b>DEBUG</b>
 
           </div>
           <br>
