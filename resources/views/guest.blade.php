@@ -101,11 +101,11 @@ OUTPUT
 
           <div class="textOnInput">
             <label >Line</label>  
-              <input  type="button" type="number" id="line" name="line" class="form-control"  style="height:50px;background-color:white;"   requied>
+              <input  type="number" id="line" name="line" class="form-control"  style="height:50px;background-color:white;"   requied>
             </div>
               <br>
 
-              <input type="submit" value="FIND VALUE" onclick="rundebug();"  class="gbutton" />
+              <input type="button"   value="FIND VALUE" onclick="rundebug();"  class="gbutton" />
               
               <button  type="button" onclick="hidedebug();" class="gbutton" style="float:right;"> HIDE</button>
               <br><br>
