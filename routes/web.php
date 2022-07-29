@@ -8,6 +8,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/guest', [App\Http\Controllers\HomeController::class, 'guest']);
 Route::get('/{id}/edit', [App\Http\Controllers\HomeController::class, 'edit']);
 Route::get('/{id}/delete', [App\Http\Controllers\HomeController::class, 'delete']);
+Route::get('/load', [App\Http\Controllers\HomeController::class, 'loaddb']);
 
 Route::post('/upload', [App\Http\Controllers\HomeController::class, 'upload']);
 Route::post('/save', [App\Http\Controllers\HomeController::class, 'save']);

@@ -42,7 +42,11 @@
                     <!-- Left Side Of Navbar -->   
                    
                         <a class="navbar-brand gbutton" href="/"  style="color: white;margin-left:-10vw;">BACK</a>
-                        
+                        <select name="compiler" id="compiler"  class="navbar-brand gbutton" style="color:white;">
+                                @foreach($complierTable as $complierTable)
+                                    <option value="{{$complierTable->compilerId}}">{{$complierTable->name}}</option>
+                                @endforeach
+                        </select>
 
                         <div class="navbar-brand"  style="color: white; margin-left:30vw">
                         <img src="{{ asset('img/logo.png') }}" style="width:1.5rem;height:1.5rem;margin-top:-.5rem;">CODER
@@ -151,12 +155,14 @@ function runpro()
     var data = {
       'code': editor.getValue(),
       'input': document.getElementById("inputarea").value,
+
     };
 
     $.ajax({
         url: '/runpro',
         type: 'POST',
         data: data,
+        compilerId : document.getElementById("compiler").value,
         success: function(response) {
           document.getElementById("output").innerHTML = response;
         }

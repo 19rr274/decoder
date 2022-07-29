@@ -22,6 +22,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+      
     }
 
     /**
@@ -33,4 +35,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
     }
+
 };
