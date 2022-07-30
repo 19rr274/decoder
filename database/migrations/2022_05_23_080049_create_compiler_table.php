@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('compilerTable', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('compilerId');
+            $table->integer('compilerId');
         });
     }
 
