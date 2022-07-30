@@ -57,7 +57,7 @@
                     <ul class="navbar-nav ms-auto" >
                         <!-- Authentication Links -->
                         <button  type="button" onclick="showinput();" class="gbutton" > RUN </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                        <button  type="button" onclick="showdebug()" class="gbutton" id="debugButton" style="display:none;" > DEBUG </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button  type="button" onclick="showdebug()" class="gbutton" id="debugButton" > DEBUG </button>&nbsp;&nbsp;&nbsp;&nbsp;
                        
                     </ul>
                 <!-- </div> -->
