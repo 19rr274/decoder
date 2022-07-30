@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('code')->nullable();
             $table->integer('user_id')->unsigned();
+            $table->integer('compilerId');
+            $table->string('compilerName');
            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

@@ -114,7 +114,7 @@
                         @foreach($todos as $todo)
                         @if ($todo->user_id==$user_id)
                         <div class="card-header cardbody" >
-                            <a  href="{{asset('/' . $todo->id . '/edit')}}" >{{$todo->title}}.cpp</a>
+                            <a  href="{{asset('/' . $todo->id . '/edit')}}" >{{$todo->title}} | {{$todo->compilerName}}   </a>
                             <span style="float:right;">
                                 <a href="{{asset('/' . $todo->id . '/delete')}}" >
                                 <img src="{{ asset('img/bin.png') }}" style="width:1.75rem;height:2rem;" alt="delete">
@@ -138,12 +138,21 @@
 <form action="/upload" method="post">
         @csrf                
         <div class="create" id="create" > 
-        <div class="textOnInput">
-            <label ><h4>Create New File</h4></label>
-            <input type="text" name="title" class="form-control"  style="width:20vw;height:50px;" placeholder="File Name" requied >
-        </div><br>
-        <input type="submit" value="Create File" class="btn btn-primary" style="width:45%;height:20%;"/>
-        <button  type="button" onclick="hidecreate();" class="btn btn-primary"style="width:45%;height:20%;float:right;" > Cancel </button>
+            <div class="textOnInput" style="text-align:center;" >
+                <label ><h4>Create New File</h4></label>
+                <input type="text" name="title" class="form-control"  style="width:20vw;height:50px;margin-right:0;" placeholder="File Name" value="MyProgram" requied >
+            <br>
+            <select name="compiler" id="compiler"  class="navbar-brand gbutton compiler" style="width:20vw;">
+          
+                                    @foreach($complierTable as $complierTable)
+                                        <option value="{{$complierTable->compilerId}}">{{$complierTable->name}}</option>
+                                    @endforeach
+            </select><br><br>
+            </div>
+            <div style="display:flex;justify-content: space-between;margin-right:16px">
+            <input type="submit" value="Create File" class="btn btn-primary" style="width:9vw;height:20%;"/>
+            <button  type="button" onclick="hidecreate();" class="btn btn-primary"style="width:9vw;height:20%;" > Cancel </button>
+            </div>
         </div>
 </form>
 

@@ -44,6 +44,9 @@
                         <a class="navbar-brand gbutton" href="/home"  style="color: white;margin-left:-13vw;">HOME</a>
                         &nbsp;  &nbsp; 
                         <button id="saveb" type="button" onclick="savefun();" class="gbutton runb" >SAVE </button>   
+                        <div class="navbar-brand"  style="color: white;padding-left:20px;">
+                        COMPILER: {{$compilerName}}
+                        </div>
                     </ul>
 
 
@@ -52,11 +55,14 @@
                         </div>
 
 
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto" >
                         <!-- Authentication Links -->
                         <button  type="button" onclick="showinput();" class="gbutton" > RUN </button> &nbsp;&nbsp;&nbsp;&nbsp;
+                        @if ( $compilerId==1)
                         <button  type="button" onclick="showdebug()" class="gbutton"  > DEBUG </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        @endif
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -183,6 +189,7 @@ function runpro()
     var data = {
       'code': editor.getValue(),
       'input': document.getElementById("inputarea").value,
+      'compilerId' : {{$compilerId}}
     };
 
     $.ajax({

@@ -28,7 +28,8 @@ class HomeController extends Controller
     {
         $todos = Todo::all(); 
         $user_id = auth()->user()->id;
-        return view('home')->with(['todos'=> $todos,'user_id'=> $user_id]);
+        $complierTable = DB::table('compilerTable')->get();
+        return view('home')->with(['todos'=> $todos,'user_id'=> $user_id ,'complierTable'=> $complierTable]); 
     }   
 
     public function edit($id)
@@ -37,8 +38,10 @@ class HomeController extends Controller
         $code = $row->code;
         $response = "";
         $input ="";
+        $compilerId=$row->compilerId;
+        $compilerName=$row->compilerName;
         return view('edit')->with(['id'=>$id, 'code'=> $code,'input' => $input, 'response'=> $response, 
-        'value'=> "",'line'=>"", 'val'=>"" ]);
+        'value'=> "",'line'=>"", 'val'=>"" ,'compilerId'=> $compilerId,'compilerName'=> $compilerName]);
         
     } 
 
@@ -46,7 +49,14 @@ class HomeController extends Controller
     {
         $todo = $request->title;
         $user_id = auth()->user()->id;
-        DB::insert('insert into todos (user_id, title) values (?, ?)', [$user_id, $todo]);
+        $complierTable = DB::table('compilerTable')->get();
+        foreach ($complierTable as $complierTable) {
+            if($complierTable->compilerId == $request->compiler) {
+                $compilerName=$complierTable->name;
+            }
+          }
+         
+        DB::insert('insert into todos (user_id, title,compilerId,compilerName) values (?, ?, ? ,? )', [$user_id, $todo, $request->compiler,$compilerName]);
         return redirect()->route('home');
     }
 
@@ -84,9 +94,9 @@ class HomeController extends Controller
             $result.=$request->val;
             $result.='<<"thevalis";exit(0);}';
             $result.= substr($mystring, $pos);
-            $response = Http::post('https://f67682c4.compilers.sphere-engine.com/api/v4/submissions?access_token=6ec5a56ef5a4aa96013c13831312a236', 
+            $response = Http::post('https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions?access_token=559e61809a29b5159d4b789da515b0d5', 
             [
-                'access_token' => '6ec5a56ef5a4aa96013c13831312a236',
+                'access_token' => '559e61809a29b5159d4b789da515b0d5',
                 'source' => $result,
                 'compilerId' => '1',
                 'input' =>  $request->input
@@ -95,9 +105,9 @@ class HomeController extends Controller
 
             sleep(1);
 
-            $a = 'https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/';
+            $a = 'https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/';
             $a.= $response["id"];
-            $a.= "?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+            $a.= "?access_token=559e61809a29b5159d4b789da515b0d5"; 
             
             $response = Http::get( $a);
         
@@ -109,9 +119,9 @@ class HomeController extends Controller
 
             if($response['result']['status']['code']==15)
             {
-                $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
+                $a = "https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/";
                 $a.= $response["id"]; 
-                $a.= "/output?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+                $a.= "/output?access_token=559e61809a29b5159d4b789da515b0d5"; 
                 $response = Http::get( $a);
                 $f=strpos($response,"thevalis");
                 $l=strrpos($response,"thevalis");
@@ -127,9 +137,9 @@ class HomeController extends Controller
                 return "Value not defined!";
             }
 
-                $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
+                $a = "https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/";
                 $a.= $pid["id"]; 
-                $a.= "/output?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+                $a.= "/output?access_token=559e61809a29b5159d4b789da515b0d5"; 
                 sleep(2);
                 $response = Http::get( $a);
            
@@ -144,9 +154,9 @@ class HomeController extends Controller
     public function runpro(Request $request)
     {
         
-        $response = Http::post('https://f67682c4.compilers.sphere-engine.com/api/v4/submissions?access_token=6ec5a56ef5a4aa96013c13831312a236', 
+        $response = Http::post('https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions?access_token=559e61809a29b5159d4b789da515b0d5', 
         [
-            'access_token' => '6ec5a56ef5a4aa96013c13831312a236',
+            'access_token' => '559e61809a29b5159d4b789da515b0d5',
             'source' => $request->code,
             'compilerId' => $request->compilerId,
             'input' =>  $request->input
@@ -155,9 +165,9 @@ class HomeController extends Controller
         
         sleep(1);
 
-        $a = 'https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/';
+        $a = 'https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/';
         $a.= $response["id"];
-        $a.= "?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+        $a.= "?access_token=559e61809a29b5159d4b789da515b0d5"; 
         $response = Http::get( $a);
     
         while ($response['result']['status']['code']<4)
@@ -165,12 +175,12 @@ class HomeController extends Controller
             sleep(1);
             $response = Http::get( $a);
         }
-        return "he";
+        
         if($response['result']['status']['code']==11)
         {
-            $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
+            $a = "https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/";
             $a.= $response["id"]; 
-            $a.= "/cmpinfo?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+            $a.= "/cmpinfo?access_token=559e61809a29b5159d4b789da515b0d5"; 
             $response = Http::get( $a);
             return  $response;
             
@@ -180,9 +190,9 @@ class HomeController extends Controller
             return "runtime error";
         }
          
-        $a = "https://f67682c4.compilers.sphere-engine.com/api/v4/submissions/";
+        $a = "https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/";
         $a.= $response["id"]; 
-        $a.= "/output?access_token=6ec5a56ef5a4aa96013c13831312a236"; 
+        $a.= "/output?access_token=559e61809a29b5159d4b789da515b0d5"; 
         $response = Http::get( $a);
         return  $response;
 
@@ -201,6 +211,7 @@ class HomeController extends Controller
     public function loaddb()
     {
         DB::table('compilerTable')->insert([
+            ['name' => 'C++ [Beginners]', 'compilerId' => 	1	 ],
             ['name' => '	AWK [GAWK]	 ', 'compilerId' => 	104	 ],
             ['name' => '	AWK [MAWK]	 ', 'compilerId' => 	105	 ],
             ['name' => '	Ada	 ', 'compilerId' => 	7	 ],
@@ -213,7 +224,7 @@ class HomeController extends Controller
             ['name' => '	C#	 ', 'compilerId' => 	86	 ],
             ['name' => '	C# [Mono]	 ', 'compilerId' => 	27	 ],
             ['name' => '	C++ 4.3.2	 ', 'compilerId' => 	41	 ],
-            ['name' => '	C++ [GCC]	 ', 'compilerId' => 	1	 ],
+           
             ['name' => '	C++14 [GCC]	 ', 'compilerId' => 	44	 ],
             ['name' => '	C99 strict	 ', 'compilerId' => 	34	 ],
             ['name' => '	CLIPS	 ', 'compilerId' => 	14	 ],

@@ -42,7 +42,7 @@
                     <!-- Left Side Of Navbar -->   
                    
                         <a class="navbar-brand gbutton" href="/"  style="color: white;margin-left:-10vw;">BACK</a>
-                        <select name="compiler" id="compiler"  class="navbar-brand gbutton" style="color:white;">
+                        <select name="compiler" id="compiler"  class="navbar-brand gbutton compiler" style="color:white;">
                                 @foreach($complierTable as $complierTable)
                                     <option value="{{$complierTable->compilerId}}">{{$complierTable->name}}</option>
                                 @endforeach
@@ -57,7 +57,7 @@
                     <ul class="navbar-nav ms-auto" >
                         <!-- Authentication Links -->
                         <button  type="button" onclick="showinput();" class="gbutton" > RUN </button> &nbsp;&nbsp;&nbsp;&nbsp;
-                        <button  type="button" onclick="showdebug()" class="gbutton"  > DEBUG </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button  type="button" onclick="showdebug()" class="gbutton" id="debugButton" style="display:none;" > DEBUG </button>&nbsp;&nbsp;&nbsp;&nbsp;
                        
                     </ul>
                 <!-- </div> -->
@@ -155,14 +155,13 @@ function runpro()
     var data = {
       'code': editor.getValue(),
       'input': document.getElementById("inputarea").value,
-
+      'compilerId' : document.getElementById("compiler").value,
     };
 
     $.ajax({
         url: '/runpro',
         type: 'POST',
         data: data,
-        compilerId : document.getElementById("compiler").value,
         success: function(response) {
           document.getElementById("output").innerHTML = response;
         }
@@ -194,6 +193,20 @@ function rundebug()
 
 
 }
+
+$( ".compiler" ).change(function() {
+   
+
+    var val_compilerId = document.getElementById("compiler").value;
+    console.log(val_compilerId);
+  if(val_compilerId=='1')
+  {
+    document.getElementById("debugButton").style.display = "block"; 
+  }
+  else{
+    document.getElementById("debugButton").style.display = "none"; 
+  }
+});
 
 function hidedebug()    { document.getElementById("debugbar").style.display = "none";   }
 function showdebug()    { document.getElementById("debugbar").style.display = "block";  }
