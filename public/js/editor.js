@@ -3,7 +3,10 @@
 
    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     lineNumbers: true,
-    theme: 'monokai'
+    // theme: 'monokai',
+    theme: 'darcula',
+    // mode: "text/x-c++src"
+
 });
 
 $.ajaxSetup({   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}    });
@@ -12,7 +15,7 @@ $.ajaxSetup({   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('con
         {
             document.getElementById("inputdiv").style.display = "none";
             document.getElementById("output").innerHTML = "Running...";
-            
+            document.getElementById("outputdiv").style.display = "inline";
             var data = {
             'code': editor.getValue(),
             'input': document.getElementById("inputarea").value,
@@ -33,6 +36,7 @@ $.ajaxSetup({   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('con
         function rundebug() 
         {
             const val_box = document.getElementById("valbox");
+            document.getElementById("valbox").style.display = "inline";
             val_box.setAttribute("value", "Calculating...");
             var val_label= "Value of " + document.getElementById("val").value + " at line " +document.getElementById("line").value;
             var data = {
@@ -49,6 +53,7 @@ $.ajaxSetup({   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('con
                 success: function(response) {   
                     document.getElementById("val_label").innerHTML = val_label; 
                     val_box.setAttribute("value", response);
+
                 }
             })
     
@@ -69,6 +74,12 @@ $.ajaxSetup({   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('con
         }
         });
     
+
+
+
+       
+
+
         function hidedebug()    { document.getElementById("debugbar").style.display = "none";   }
         function showdebug()    { document.getElementById("debugbar").style.display = "inline";  }
         function hideinput()    { document.getElementById("inputdiv").style.display = "none";   }

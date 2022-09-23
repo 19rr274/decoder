@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>DCODER</title>
     <script src="{{ asset('js/app.js') }}" defer></script>
+
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel = "icon" href = "{{ asset('img/logoblack.png') }}" type = "image/x-icon">
@@ -13,6 +14,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link href="{{ asset('css/editcm.css') }}" rel="stylesheet">
     <link href="{{ asset('css/editor.css') }}" rel="stylesheet">
+
+{{-- <script src="{{ asset('js/clike.js') }}" ></script> --}}
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
@@ -42,11 +46,12 @@
   
                     
 CODE
-<textarea style="magrin-left:5%;" id="code" name="code">{{$code}}</textarea><br>    
+<textarea style="magrin-left:5%;height:70vh;" id="code" name="code">{{$code}}</textarea><br>    
    
-
+<div style="display:none;" id="outputdiv" >
 OUTPUT
-<textarea class="ioo" id=output name="output" style="width:100%;height:40vh;color:white; " >{{$response}}</textarea><br><br>
+<textarea class="ioo" id="output" name="output" style="width:100%;height:40vh;color:white; background-color:#2b2b2b;" >{{$response}}</textarea><br><br>
+</div>
 
 <div class="inputdiv" id="inputdiv" > 
       <b>INPUT</b>
@@ -79,9 +84,9 @@ OUTPUT
             </div>
               <br>
 
-              <input type="button"   value="FIND VALUE" onclick="rundebug();"  class="gbutton" />
+              <input type="button"  style="width:45%;" value="FIND VALUE" onclick="rundebug();"  class="gbutton" />
               
-              <button  type="button" onclick="hidedebug();" class="gbutton" style="float:right;"> HIDE</button>
+              <button  type="button" style="width:45%;float:right;" onclick="hidedebug();" class="gbutton" > HIDE</button>
               <br><br>
               <div class="textOnInput">
                       
@@ -90,7 +95,7 @@ OUTPUT
                                 
                           </label>
                         
-                      <input type="text" id="valbox" name="value" style="width:20vw;height:50px;color:black;"  class="form-control"  > 
+                      <input type="text" id="valbox" name="value" style="display:none;width:20vw;height:50px;color:black;"  class="form-control"  > 
             </div>
 
 </div>
@@ -107,6 +112,8 @@ OUTPUT
 
 
 <script src="{{ asset('js/editor.js') }}" ></script>
+{{-- <script src="{{ asset('js/clike.js') }}" ></script> --}}
+
 </body>
 </html>
 

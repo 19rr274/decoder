@@ -94,9 +94,9 @@ class HomeController extends Controller
             $result.=$request->val;
             $result.='<<"thevalis";exit(0);}';
             $result.= substr($mystring, $pos);
-            $response = Http::post('https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions?access_token=559e61809a29b5159d4b789da515b0d5', 
+            $response = Http::post('https://10202aa8.compilers.sphere-engine.com/api/v4/submissions?access_token=47a6f4043b62aab76db8275e6cfef548', 
             [
-                'access_token' => '559e61809a29b5159d4b789da515b0d5',
+                'access_token' => '47a6f4043b62aab76db8275e6cfef548',
                 'source' => $result,
                 'compilerId' => '1',
                 'input' =>  $request->input
@@ -105,9 +105,9 @@ class HomeController extends Controller
 
             sleep(1);
 
-            $a = 'https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/';
+            $a = 'https://10202aa8.compilers.sphere-engine.com/api/v4/submissions/';
             $a.= $response["id"];
-            $a.= "?access_token=559e61809a29b5159d4b789da515b0d5"; 
+            $a.= "?access_token=47a6f4043b62aab76db8275e6cfef548"; 
             
             $response = Http::get( $a);
         
@@ -119,9 +119,9 @@ class HomeController extends Controller
 
             if($response['result']['status']['code']==15)
             {
-                $a = "https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/";
+                $a = "https://10202aa8.compilers.sphere-engine.com/api/v4/submissions/";
                 $a.= $response["id"]; 
-                $a.= "/output?access_token=559e61809a29b5159d4b789da515b0d5"; 
+                $a.= "/output?access_token=47a6f4043b62aab76db8275e6cfef548"; 
                 $response = Http::get( $a);
                 $f=strpos($response,"thevalis");
                 $l=strrpos($response,"thevalis");
@@ -137,9 +137,9 @@ class HomeController extends Controller
                 return "Value not defined!";
             }
 
-                $a = "https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/";
+                $a = "https://10202aa8.compilers.sphere-engine.com/api/v4/submissions/";
                 $a.= $pid["id"]; 
-                $a.= "/output?access_token=559e61809a29b5159d4b789da515b0d5"; 
+                $a.= "/output?access_token=47a6f4043b62aab76db8275e6cfef548"; 
                 sleep(2);
                 $response = Http::get( $a);
            
@@ -154,9 +154,9 @@ class HomeController extends Controller
     public function runpro(Request $request)
     {
         
-        $response = Http::post('https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions?access_token=559e61809a29b5159d4b789da515b0d5', 
+        $response = Http::post('https://10202aa8.compilers.sphere-engine.com/api/v4/submissions?access_token=47a6f4043b62aab76db8275e6cfef548', 
         [
-            'access_token' => '559e61809a29b5159d4b789da515b0d5',
+            'access_token' => '47a6f4043b62aab76db8275e6cfef548',
             'source' => $request->code,
             'compilerId' => $request->compilerId,
             'input' =>  $request->input
@@ -165,9 +165,9 @@ class HomeController extends Controller
         
         sleep(1);
 
-        $a = 'https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/';
+        $a = 'https://10202aa8.compilers.sphere-engine.com/api/v4/submissions/';
         $a.= $response["id"];
-        $a.= "?access_token=559e61809a29b5159d4b789da515b0d5"; 
+        $a.= "?access_token=47a6f4043b62aab76db8275e6cfef548"; 
         $response = Http::get( $a);
     
         while ($response['result']['status']['code']<4)
@@ -178,9 +178,9 @@ class HomeController extends Controller
         
         if($response['result']['status']['code']==11)
         {
-            $a = "https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/";
+            $a = "https://10202aa8.compilers.sphere-engine.com/api/v4/submissions/";
             $a.= $response["id"]; 
-            $a.= "/cmpinfo?access_token=559e61809a29b5159d4b789da515b0d5"; 
+            $a.= "/cmpinfo?access_token=47a6f4043b62aab76db8275e6cfef548"; 
             $response = Http::get( $a);
             return  $response;
             
@@ -190,9 +190,9 @@ class HomeController extends Controller
             return "runtime error";
         }
          
-        $a = "https://992fe1c1.compilers.sphere-engine.com/api/v4/submissions/";
+        $a = "https://10202aa8.compilers.sphere-engine.com/api/v4/submissions/";
         $a.= $response["id"]; 
-        $a.= "/output?access_token=559e61809a29b5159d4b789da515b0d5"; 
+        $a.= "/output?access_token=47a6f4043b62aab76db8275e6cfef548"; 
         $response = Http::get( $a);
         return  $response;
 

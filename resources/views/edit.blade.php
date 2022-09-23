@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>DCODER</title>
+    <title>  {{$compilerName}} Compiler</title>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -23,9 +23,9 @@
         <div  style=" background-color: #222222;display:flex; justify-content: space-between; margin-top:20px;margin-bottom:10px; width:95vw;">
        
             <div>
-                        <div class="navbar-brand"  style="color: white;">
+                        {{-- <div class="navbar-brand"  style="color: white;">
                         {{$compilerName}}
-                        </div>
+                        </div> --}}
 
                         <button id="saveb" type="button" onclick="savefun();" class="gbutton runb" >SAVE </button>   
                         @if ( $compilerId==1)
@@ -39,7 +39,7 @@
                 <img src="{{ asset('img/logo.png') }}" style="width:1.5rem;height:1.5rem;margin-top:-.5rem;">CODER
             </div>
 
-            <div style="display:inline;min-width:352px;">
+            <div style="display:inline;min-width:150px;">
                
                     <a  style="color: white; text-decoration: none;float:right;"  class=" dropdown-toggle" href="#"  data-bs-toggle="dropdown">
                         {{ Auth::user()->name }}
@@ -67,9 +67,13 @@
 CODE
 <textarea style="magrin-left:5%;" id="code" name="code">{{$code}}</textarea><br>    
    
+<div style="display:none;" id="outputdiv" >
 
 OUTPUT
-<textarea class="ioo" id=output name="output" style="width:100%;height:40vh;color:white; " >{{$response}}</textarea><br><br>
+<textarea class="ioo" id=output name="output" style="width:100%;height:40vh;color:white; background-color:#2b2b2b;" >{{$response}}</textarea><br><br>
+
+</div>
+
 
 <div class="inputdiv" id="inputdiv" > 
       <b>INPUT</b>
@@ -79,7 +83,7 @@ OUTPUT
       <br>
       <textarea name="input" id="inputarea" style="width:100%;height:40vh;resize:none;"  class="form-control" > {{$input}} </textarea>
       <span style="float:right;margin-top:-3.5vw;margin-right:1vw;">
-      <button  type="button" onclick="runpro();" class="gbutton runb" >RUN </button>
+      <button  type="button" onclick="runproedit();" class="gbutton runb" >RUN </button>
       </span>
 </div>
 
@@ -102,9 +106,9 @@ OUTPUT
             </div>
               <br>
 
-              <input type="button"   value="FIND VALUE" onclick="rundebug();"  class="gbutton" />
+              <input type="button"  style="width:45%;" value="FIND VALUE" onclick="rundebug();"  class="gbutton" />
               
-              <button  type="button" onclick="hidedebug();" class="gbutton" style="float:right;"> HIDE</button>
+              <button  type="button" onclick="hidedebug();" class="gbutton" style="width:45%;float:right;" > HIDE</button>
               <br><br>
               <div class="textOnInput">
                       
@@ -130,6 +134,50 @@ OUTPUT
 
 
 <script src="{{ asset('js/editor.js') }}" ></script>
+
+<script >
+$.ajaxSetup({   headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}    });
+    
+function savefun() 
+{
+    document.getElementById("saveb").innerHTML = "Saving...";
+    
+    var data = {
+      'code': editor.getValue(),
+      'id': {{$id}}
+    };
+    $.ajax({
+        url: '/save',
+        type: 'POST',
+        data: data,
+        success: function(response) {   document.getElementById("saveb").innerHTML = "SAVE";  }
+    })
+}
+
+function runproedit() 
+        {
+            document.getElementById("inputdiv").style.display = "none";
+            document.getElementById("output").innerHTML = "Running...";
+            document.getElementById("outputdiv").style.display = "inline";
+            var data = {
+            'code': editor.getValue(),
+            'input': document.getElementById("inputarea").value,
+            'compilerId' : {{$compilerId}},
+            };
+    
+            $.ajax({
+                url: '/runpro',
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                document.getElementById("output").innerHTML = response;
+                }
+            })
+        }
+
+</script>
+{{-- <script src="{{ asset('js/clike.js') }}" ></script> --}}
+
 </body>
 </html>
 
